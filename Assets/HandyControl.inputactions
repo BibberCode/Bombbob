@@ -1,0 +1,35 @@
+{
+    "version": 1,
+    "name": "HandyControl",
+    "maps": [
+        {
+            "name": "HandyControl",
+            "id": "42ce3b6c-ee4c-4d65-9c99-9ce8ab0c9e74",
+            "actions": [
+                {
+                    "name": "Movement",
+                    "type": "Value",
+                    "id": "f2a9c710-1548-438e-9305-cf4c0f90891c",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "dd7c4a8c-08e2-4c25-b147-0fafc42e6439",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
