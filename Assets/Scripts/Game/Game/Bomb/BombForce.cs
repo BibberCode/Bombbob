@@ -1,7 +1,9 @@
 using System.Collections;
 using Unity.Netcode;
+using Unity.Netcode.Components;
 using UnityEngine;
 
+[RequireComponent(typeof(NetworkTransform))]
 public class BombForce : NetworkBehaviour
 {
     private Rigidbody rb;

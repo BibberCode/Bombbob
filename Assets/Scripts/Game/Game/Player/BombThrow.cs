@@ -29,6 +29,8 @@ public class BombThrow : NetworkBehaviour
 
     private void Update()
     {
+        if (!IsOwner) return;
+
         Timer();
 
         // Power aufladen
@@ -47,9 +49,10 @@ public class BombThrow : NetworkBehaviour
     }
 
     // CLIENT → SERVER
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
     private void RequestThrowServerRpc(float power)
     {
+        Debug.Log($"RequestThrowServerRpc auf Server empfangen, power={power}, Owner={OwnerClientId}");
         // Bombe erzeugen
         GameObject b = Instantiate(bomb, throwAim.position, bombThrowPosition.transform.rotation);
         b.GetComponent<NetworkObject>().Spawn(true);
