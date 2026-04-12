@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
@@ -18,6 +19,14 @@ public class PlayerNetworkManager : NetworkBehaviour
     [SerializeField] private GameObject playerCamera;
 
     public static bool OwnerIs = false;
+
+    private Rigidbody rb;
+    private bool isKnockback = false;
+
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
 
     public override void OnNetworkSpawn()
     {
@@ -71,6 +80,25 @@ public class PlayerNetworkManager : NetworkBehaviour
         material.color = color.Value;
 
         gameObject.GetComponent<PlayerNetworkManager>().enabled = true;
+    }
+
+    [ClientRpc]
+    public void ApplyKnockbackClientRpc(Vector3 force, ClientRpcParams rpcParams = default)
+    {
+        if (!IsOwner) return;
+
+        if (rb != null)
+        {
+            isKnockback = true;
+            rb.AddForce(force, ForceMode.Impulse);
+            StartCoroutine(ResetKnockback());
+        }
+    }
+
+    IEnumerator ResetKnockback()
+    {
+        yield return new WaitForSeconds(0.2f);
+        isKnockback = false;
     }
 
     private void Update()

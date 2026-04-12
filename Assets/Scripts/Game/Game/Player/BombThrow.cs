@@ -1,7 +1,7 @@
-﻿using UnityEngine;
-using UnityEngine.InputSystem;
+﻿using TouchControlsKit;
 using Unity.Netcode;
-using TouchControlsKit;
+using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class BombThrow : NetworkBehaviour
 {
@@ -40,22 +40,20 @@ public class BombThrow : NetworkBehaviour
             currentPower = Mathf.Clamp(currentPower, minPower, maxPower);
         }
 
-        if (Mouse.current.leftButton.wasReleasedThisFrame && timer == ogTimer || TCKInput.GetAction("fireBtn", EActionEvent.Up) && timer == ogTimer)
+        if ((Mouse.current.leftButton.wasReleasedThisFrame || TCKInput.GetAction("fireBtn", EActionEvent.Up)) && timer == ogTimer)
         {
-            RequestThrowServerRpc(currentPower);
+            RequestThrowServerRpc(currentPower, throwAim.position, throwAim.rotation);
             Throwtimer();
             currentPower = minPower;
         }
     }
 
     // CLIENT → SERVER
-    [ServerRpc(RequireOwnership = false)]
-    private void RequestThrowServerRpc(float power)
+    [ServerRpc]
+    private void RequestThrowServerRpc(float power, Vector3 pos, Quaternion rot)
     {
-        Debug.Log($"RequestThrowServerRpc auf Server empfangen, power={power}, Owner={OwnerClientId}");
-        // Bombe erzeugen
-        GameObject b = Instantiate(bomb, throwAim.position, bombThrowPosition.transform.rotation);
-        b.GetComponent<NetworkObject>().Spawn(true);
+        GameObject b = Instantiate(bomb, pos, rot);
+        b.GetComponent<NetworkObject>().Spawn();
 
         var bf = b.GetComponent<BombForce>();
         bf.forceStrength = power;

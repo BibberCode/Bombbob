@@ -11,15 +11,23 @@ public class UniversallKeys : MonoBehaviour
     void Update()
     {
         // Escape zum Beenden
-        if (Keyboard.current.escapeKey.wasPressedThisFrame)
-        {
-            Application.Quit();
-        }
+        // if (Keyboard.current.escapeKey.wasPressedThisFrame)
+        // {
+        //     Application.Quit();
+        // }
 
-        // F11 für Vollbild
         if (Keyboard.current.f11Key.wasPressedThisFrame)
+{
+        if (Screen.fullScreenMode == FullScreenMode.ExclusiveFullScreen)
         {
-            Screen.fullScreen = !Screen.fullScreen;
+            // → Minecraft-Style (randloses Fenster mit Taskleiste)
+            Screen.fullScreenMode = FullScreenMode.MaximizedWindow;
         }
+        else
+        {
+            // → echtes Vollbild
+            Screen.fullScreenMode = FullScreenMode.ExclusiveFullScreen;
+        }
+}
     }
 }

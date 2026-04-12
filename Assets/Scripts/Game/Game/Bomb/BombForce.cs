@@ -46,14 +46,36 @@ public class BombForce : NetworkBehaviour
     }
 
     private void OnCollisionEnter(Collision collision)
-    {
-        if (!IsServer) return;
+{
+    if (!IsServer) return;
 
-        if (forceStrength >= 25)
+    if (collision.gameObject.CompareTag("Player"))
+    {
+        var playerNetObj = collision.gameObject.GetComponent<NetworkObject>();
+        var playerScript = collision.gameObject.GetComponent<PlayerNetworkManager>();
+
+        if (playerNetObj != null && playerScript != null)
         {
-            Explode();
+            Vector3 force = transform.forward * 10f;
+
+            // 🎯 Nur an den betroffenen Client senden
+            ClientRpcParams rpcParams = new ClientRpcParams
+            {
+                Send = new ClientRpcSendParams
+                {
+                    TargetClientIds = new ulong[] { playerNetObj.OwnerClientId }
+                }
+            };
+
+            playerScript.ApplyKnockbackClientRpc(force, rpcParams);
         }
     }
+
+    if (forceStrength >= 25)
+    {
+        Explode();
+    }
+}
 
     private void Explode()
     {
