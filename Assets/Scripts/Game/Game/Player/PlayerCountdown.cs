@@ -1,23 +1,75 @@
-using UnityEngine;
+﻿using UnityEngine;
+using Unity.Netcode;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
-public class PlayerCountdown : MonoBehaviour
+public class PlayerCountdown : NetworkBehaviour
 {
-    private void Update()
+    private PlayerMovementPhysics movement;
+    private BombThrow bomb;
+    private UICountdown countdown;
+
+    private bool initialized = false;
+
+    public override void OnNetworkSpawn()
     {
-        if (SceneManager.GetActiveScene().name == "Game")
+        movement = GetComponent<PlayerMovementPhysics>();
+        bomb = GetComponent<BombThrow>();
+
+        if (IsServer)
         {
-            if (UICountdown.instance.beginTimer <= 0.01f)
-            {
-                gameObject.GetComponent<PlayerMovementPhysics>().enabled = true;
-                gameObject.GetComponent<BombThrow>().enabled = true;
-            }
-            else
-            {
-                gameObject.GetComponent<PlayerMovementPhysics>().enabled = false;
-                gameObject.GetComponent<BombThrow>().enabled = false;
-            }
+            NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += OnSceneLoaded;
         }
-        
+    }
+
+    private void OnSceneLoaded(string sceneName, LoadSceneMode mode,
+        List<ulong> clientsCompleted, List<ulong> clientsTimedOut)
+    {
+        if (sceneName != "Game") return;
+
+        Debug.Log("Game Scene geladen → Player deaktivieren");
+
+        // Movement deaktivieren
+        if (movement != null) movement.enabled = false;
+        if (bomb != null) bomb.enabled = false;
+
+        initialized = false; // neu suchen in neuer Scene
+    }
+
+    void Update()
+    {
+        if (SceneManager.GetActiveScene().name != "Game") return;
+
+        // Countdown finden (nach Scene-Wechsel)
+        if (!initialized)
+        {
+            countdown = FindFirstObjectByType<UICountdown>();
+
+            if (countdown != null)
+            {
+                initialized = true;
+            }
+            return;
+        }
+
+        if (countdown == null) return;
+
+        // Wenn Countdown fertig → aktivieren
+        if (countdown.gameStarted.Value)
+        {
+            if (movement != null && !movement.enabled)
+                movement.enabled = true;
+
+            if (bomb != null && !bomb.enabled)
+                bomb.enabled = true;
+        }
+    }
+
+    public override void OnNetworkDespawn()
+    {
+        if (NetworkManager.Singleton != null && IsServer)
+        {
+            NetworkManager.Singleton.SceneManager.OnLoadEventCompleted -= OnSceneLoaded;
+        }
     }
 }

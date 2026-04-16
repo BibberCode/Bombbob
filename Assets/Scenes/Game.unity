@@ -14417,6 +14417,8 @@ GameObject:
   - component: {fileID: 911843597}
   - component: {fileID: 911843599}
   - component: {fileID: 911843600}
+  - component: {fileID: 911843601}
+  - component: {fileID: 911843602}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -14479,7 +14481,45 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LightControl
   globalGameLight: {fileID: 1501818566}
-  daySpeed: 0.5
+  daySpeed: 0.05
+--- !u!114 &911843601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 911843596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
+  GlobalObjectIdHash: 1794649995
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
+--- !u!114 &911843602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 911843596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49bfdc422b5ddaf4a9daecd04e8cc065, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameStartManager
+  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!1001 &930533177
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14809,6 +14849,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3219531506720554462, guid: 13d22a6630d7b464db63653ab9863c9b, type: 3}
+      propertyPath: GameManager
+      value: 
+      objectReference: {fileID: 911843597}
     - target: {fileID: 4994357788714595524, guid: 13d22a6630d7b464db63653ab9863c9b, type: 3}
       propertyPath: m_Name
       value: HeathCanvas
@@ -21838,6 +21882,7 @@ GameObject:
   - component: {fileID: 1259239553}
   - component: {fileID: 1259239556}
   - component: {fileID: 1259239555}
+  - component: {fileID: 1259239557}
   - component: {fileID: 1259239554}
   m_Layer: 5
   m_Name: Countdown
@@ -21877,7 +21922,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff298f86846c8574d858d6189fea708b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Countdown
+  ShowTopMostFoldoutHeaderGroup: 1
   beginTimer: 5
+  gameStarted:
+    UpdateTraits:
+      MinSecondsBetweenUpdates: 0
+      MaxSecondsBetweenUpdates: 0
+    m_InternalValue: 0
 --- !u!114 &1259239555
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21979,6 +22030,31 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1259239552}
   m_CullTransparentMesh: 1
+--- !u!114 &1259239557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1259239552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
+  GlobalObjectIdHash: 3159314623
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!1 &1260747536
 GameObject:
   m_ObjectHideFlags: 0
@@ -25795,7 +25871,7 @@ Light:
   serializedVersion: 13
   m_Type: 1
   m_Color: {r: 1, g: 0.9640101, b: 0.8660377, a: 1}
-  m_Intensity: 1
+  m_Intensity: 2
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -29418,7 +29494,6 @@ MonoBehaviour:
   ActiveYes: {fileID: 1184032112}
   ActiveNo: {fileID: 1633345232}
   FullChaged: {fileID: 1661623015}
-  bombThrow: {fileID: 5352182741101920686, guid: 5430228a1272e184c8ca57abce533fe4, type: 3}
 --- !u!64 &1770795986
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -33177,6 +33252,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bf677e952edf8c44ada7486e11e90fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnderMap
+  GameManager: {fileID: 911843597}
 --- !u!64 &1999033956
 MeshCollider:
   m_ObjectHideFlags: 0

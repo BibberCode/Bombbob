@@ -1,12 +1,15 @@
+using System;
 using UnityEngine;
 
 public class UnderMap : MonoBehaviour
 {
+    [SerializeField] private GameManager GameManager;
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Player")
         {
-            GameManager.instance.hearts -= 20;
+            GameManager.hearts -= 20;
         }
     }
 }

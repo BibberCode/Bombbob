@@ -7,12 +7,16 @@ public class DeadMessage : MonoBehaviour
     private GameObject player;
     [SerializeField] private GameObject deadMessageCanvas;
 
+    private GameManager GameManager;
+
     private void Start()
     {
         if (PlayerNetworkManager.OwnerIs)
         {
             player = GameObject.Find("Player(Clone)");
         }
+
+        GameManager = gameObject.GetComponent<GameManager>();
     }
 
     private void Update()
@@ -20,12 +24,12 @@ public class DeadMessage : MonoBehaviour
         if (!PlayerNetworkManager.OwnerIs) { return; }
         if (SceneManager.GetActiveScene().name != "Game") { return; }
 
-        if (GameManager.instance.hearts <= 0)
+        if (GameManager.hearts <= 0)
         {
-                Instantiate(playerCamPrefab, player.transform.position, player.transform.rotation);
-                deadMessageCanvas.SetActive(true);
-                Destroy(player);
-                gameObject.GetComponent<DeadMessage>().enabled = false;
+            Instantiate(playerCamPrefab, player.transform.position, player.transform.rotation);
+            deadMessageCanvas.SetActive(true);
+            Destroy(player);
+            gameObject.GetComponent<DeadMessage>().enabled = false;
         }
     }
 }

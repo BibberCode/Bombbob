@@ -6,7 +6,14 @@ public class BombExplosion : NetworkBehaviour
 {
     private float bigger = 1f;
 
+    private GameManager GameManager;
+
     [SerializeField] private GameObject visualExplosionPrefab;
+
+    void Start()
+    {
+        GameManager = FindObjectOfType<GameManager>();
+    }
 
     private void Update()
     {
@@ -34,7 +41,7 @@ public class BombExplosion : NetworkBehaviour
         {
             if (SceneManager.GetActiveScene().name == "Game")
             {
-                GameManager.instance.hearts -= 0.5f;
+                GameManager.hearts -= 0.5f;
             }
         }
     }

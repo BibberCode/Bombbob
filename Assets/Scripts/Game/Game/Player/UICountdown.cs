@@ -1,31 +1,43 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using Unity.Netcode;
 
-public class UICountdown : MonoBehaviour
+public class UICountdown : NetworkBehaviour
 {
-    public static UICountdown instance;
-
-    private TextMeshProUGUI TMPro;
+    private TextMeshProUGUI text;
     public float beginTimer = 5;
+
+    private bool startCountdown = false;
+
+    // 👇 NEU: globaler Start-Status
+    public NetworkVariable<bool> gameStarted = new NetworkVariable<bool>(false);
 
     void Start()
     {
-        instance = this;
-        TMPro = GetComponent<TextMeshProUGUI>();
+        text = GetComponent<TextMeshProUGUI>();
     }
 
     void Update()
     {
-        if (SceneManager.GetActiveScene().name == "Game")
-        {
-            beginTimer -= Time.deltaTime;
-            TMPro.text = beginTimer.ToString("F0");
-        }
+        if (!startCountdown) return;
+
+        beginTimer -= Time.deltaTime;
+        text.text = beginTimer.ToString("F0");
 
         if (beginTimer <= 0)
         {
             gameObject.SetActive(false);
+
+            if (IsServer)
+            {
+                gameStarted.Value = true; // 👈 alle bekommen das
+            }
         }
+    }
+
+    [ClientRpc]
+    public void StartCountdownClientRpc()
+    {
+        startCountdown = true;
     }
 }

@@ -1055,6 +1055,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa4b297292298794ba4ce31068a80abb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCountdown
+  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!114 &7085339629424415800
 MonoBehaviour:
   m_ObjectHideFlags: 0
