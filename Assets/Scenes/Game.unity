@@ -14414,8 +14414,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 911843598}
-  - component: {fileID: 911843597}
-  - component: {fileID: 911843599}
   - component: {fileID: 911843600}
   - component: {fileID: 911843601}
   - component: {fileID: 911843602}
@@ -14426,19 +14424,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &911843597
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 911843596}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db1938eda07007242a65d5c5ebe5ded0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  hearts: 10
 --- !u!4 &911843598
 Transform:
   m_ObjectHideFlags: 0
@@ -14454,20 +14439,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &911843599
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 911843596}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8992b900e10828c4880340036ae10aea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DeadMessage
-  playerCamPrefab: {fileID: 2026048634526790109, guid: 05146bdfcf225b841ad498eb2594fd5e, type: 3}
-  deadMessageCanvas: {fileID: 593887395}
 --- !u!114 &911843600
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14852,7 +14823,7 @@ PrefabInstance:
     - target: {fileID: 3219531506720554462, guid: 13d22a6630d7b464db63653ab9863c9b, type: 3}
       propertyPath: GameManager
       value: 
-      objectReference: {fileID: 911843597}
+      objectReference: {fileID: 0}
     - target: {fileID: 4994357788714595524, guid: 13d22a6630d7b464db63653ab9863c9b, type: 3}
       propertyPath: m_Name
       value: HeathCanvas
@@ -33252,7 +33223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bf677e952edf8c44ada7486e11e90fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnderMap
-  GameManager: {fileID: 911843597}
+  GameManager: {fileID: 0}
 --- !u!64 &1999033956
 MeshCollider:
   m_ObjectHideFlags: 0
